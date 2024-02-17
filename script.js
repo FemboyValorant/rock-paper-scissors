@@ -1,6 +1,6 @@
 function getComputerChoice() { 
     let randGen = Math.floor(Math.random() * 3);
-    let choice = ""
+    let choice;
     switch (randGen) {
         case 0: choice = "Rock"; break;
         case 1: choice = "Paper"; break;
@@ -14,20 +14,24 @@ function playRound(playerSelection, computerSelection) {
         case (playerSelection === "Paper" && computerSelection === "Rock"):
         case (playerSelection === "Scissors" && computerSelection === "Paper"):
             console.log(`You win! ${playerSelection} beats ${computerSelection}`);
-            return 2;
+            return WIN;
 
         case (playerSelection === computerSelection):
-            console.log(`You tie! ${playerSelection} beats ${computerSelection}`);
-            return 1;   
+            console.log(`You tie! ${playerSelection} ties with ${computerSelection}`);
+            return TIE;   
 
         default:
             console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-            return 0;           
+            return LOSS;           
     }
 }
 
 let capitalize = (string) => 
 string.replace(string.charAt(0), string.charAt(0).toUpperCase())
+
+const LOSS = 0;
+const TIE = 1;
+const WIN = 2;
 
 function playGame() {
     let roundResult, userScore, computerScore, playerChoice;
@@ -41,10 +45,10 @@ function playGame() {
         roundResult = playRound(playerChoice, getComputerChoice())
 
         switch (roundResult) {
-            case 0:
+            case LOSS:
                 computerScore++;
                 break;
-            case 2:
+            case WIN:
                 userScore++;
                 break;
         }
