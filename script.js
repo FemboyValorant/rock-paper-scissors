@@ -26,24 +26,24 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-let capitalize = (string) => 
-string.replace(string.charAt(0), string.charAt(0).toUpperCase())
-
 const LOSS = 0;
 const TIE = 1;
 const WIN = 2;
 
-function playGame() {
-    let roundResult, userScore, computerScore, playerChoice;
-    userScore = 0;
-    computerScore = 0;
+let roundResult, userScore, computerScore, playerChoice;
+userScore = 0;
+computerScore = 0;
+const choiceSelect = document.querySelectorAll('button.choiceButtons');
+const resultDisplay = document.querySelector('#results');
+const winDisplay = document.querySelector('#winner');
+let winFlag = false;
 
-    for (let i = 0; i < 5; i++) {
-        playerChoice = prompt("Your choice").toLowerCase()
-        playerChoice = capitalize(playerChoice)
-
+choiceSelect.forEach(buttonChoice => buttonChoice.addEventListener('click', () => {
+    if (winFlag === false){
+        playerChoice = buttonChoice.textContent;
+    
         roundResult = playRound(playerChoice, getComputerChoice())
-
+    
         switch (roundResult) {
             case LOSS:
                 computerScore++;
@@ -52,21 +52,25 @@ function playGame() {
                 userScore++;
                 break;
         }
-
-        console.log(`Current score is ${userScore}-${computerScore}`)
+    
+        resultDisplay.textContent = `Current score is ${userScore}-${computerScore}`;    
     }
 
     switch(true){
-        case userScore>computerScore:
-            console.log("You have won the game!")
+        case userScore>=5:
+            winDisplay.textContent = "You have won the game!";
+            winFlag = true;
             break;
-        case userScore===computerScore:
-            console.log("You both tied the game!")
+        case computerScore>=5:
+            winDisplay.textContent = "The computer has won the game!";
+            winFlag = true;
             break;
-        case userScore<computerScore:
-            console.log("The computer has won the game!")
+        default:
             break;
     }
-}
+}))
 
-playGame();
+
+
+
+
